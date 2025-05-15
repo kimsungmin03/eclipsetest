@@ -6,5 +6,4 @@
  *
  */
 module fund_application {
-	requires javafx.graphics;
 }
