@@ -29,14 +29,14 @@ public class StockList {
 
             writer.newLine();
         } catch (IOException e) {
-            System.out.println("사용자 정보를 저장하는 동안 오류가 발생했습니다.");
+            System.out.println("StockList를 저장하는 동안 오류가 발생했습니다.");
         }
 		}else {
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME,true))) {
 	            writer.write(Stock_name + "," +Integer.toString(pos_chance) + "," + Integer.toString(neg_chance)+","+Integer.toString(stock));  // 사용자 정보를 쉼표로 구분하여 파일에 쓰기
 	            writer.newLine();
 	        } catch (IOException e) {
-	            System.out.println(Stock_name+"사용자 정보를 저장하는 동안 오류가 발생했습니다.");
+	            System.out.println(Stock_name+"StockList를 저장하는 동안 오류가 발생했습니다.");
 	        }
 			
 		}
@@ -62,7 +62,7 @@ public class StockList {
                 }
             }
         } catch (IOException e) {
-            System.out.println("사용자 정보를 불러오는 동안 오류가 발생했습니다.");
+            System.out.println("StockList를 불러오는 동안 오류가 발생했습니다.");
         }
         return stocks;
     }

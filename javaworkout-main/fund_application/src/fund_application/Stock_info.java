@@ -70,14 +70,6 @@ public class Stock_info {
 			this.Neg_chance+=Change_value;
 		}
 	}
-	void Stock_change(int pos, int neg) {
-	    // pos, neg를 합쳐서 변동폭을 조정
-	    double maxRate = (pos + neg) / 100.0; // 예: pos=3, neg=2 → 0.05(5%)
-	    double rate = (Math.random() * 2 - 1) * maxRate; // -maxRate ~ +maxRate
-	    this.Stock_price = (int)(this.Stock_price * (1 + rate));
-	    System.out.println(this.Stock_price);
-	}
-	
 	
 	public void save(String Stock_name,int stock_price, Boolean ini) {
 		if (ini){
@@ -85,14 +77,14 @@ public class Stock_info {
             writer.write(Stock_name + "," +Integer.toString(stock_price));  // 사용자 정보를 쉼표로 구분하여 파일에 쓰기
             writer.newLine();
         } catch (IOException e) {
-            System.out.println("사용자 정보를 저장하는 동안 오류가 발생했습니다.");
+            System.out.println("Stock_info를 저장하는 동안 오류가 발생했습니다.");
         }
         }else {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME,true))) {
             writer.write(Stock_name + "," +Integer.toString(stock_price));  // 사용자 정보를 쉼표로 구분하여 파일에 쓰기
             writer.newLine();
         } catch (IOException e) {
-            System.out.println("사용자 정보를 저장하는 동안 오류가 발생했습니다.");
+            System.out.println("Stock_info를 저장하는 동안 오류가 발생했습니다.");
         }
 		}
     }
@@ -113,11 +105,32 @@ public class Stock_info {
                 }
             }
         } catch (IOException e) {
-            System.out.println("사용자 정보를 불러오는 동안 오류가 발생했습니다.");
+            System.out.println("Stock_info를 불러오는 동안 오류가 발생했습니다.");
         }
         return stocks;
     }
+    private List<PriceChangeListener> listeners = new ArrayList<>();
 
+    public void addPriceChangeListener(PriceChangeListener l) {
+        listeners.add(l);
+    }
+
+    public void Stock_change(int pos, int neg) {
+        // 기존 로직
+    	double maxRate = (pos + neg) / 100.0; // 예: pos=3, neg=2 → 0.05(5%)
+	    double rate = (Math.random() * 2 - 1) * maxRate; // -maxRate ~ +maxRate
+	    this.Stock_price = (int)(this.Stock_price * (1 + rate));
+	    System.out.println(this.Stock_price);
+        notifyPriceChange();
+    }
+
+    private void notifyPriceChange() {
+        listeners.forEach(l -> l.priceChanged(this.Stock_price));
+    }
+
+    public interface PriceChangeListener {
+        void priceChanged(int newPrice);
+    }
 
 
 }

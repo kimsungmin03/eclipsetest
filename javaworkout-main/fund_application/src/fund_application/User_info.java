@@ -120,6 +120,14 @@ public class User_info {
 			
 			
 			
+			public UserStock(int time, String stock_name, int amount, int price, String type) {
+				// TODO Auto-generated constructor stub
+				this.Stockname = Stockname;
+		        this.amount = amount;
+		        this.date = date;
+		        this.stockprice=price;
+		        this.type=type;
+			}
 			public List<UserStock> load() { //users라는 이름의 List 객체를 선언하고, load 메서드를 호출
 		        List<UserStock> users = new ArrayList<>();
 		        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -145,5 +153,5 @@ public class User_info {
 			this.User_pw=password;
 		}
 		
-		
+
 }
